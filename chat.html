@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Chat Appl</title>
+    </head>
+    <body>
+        <ul id="messages" ></ul>
+        <input  placeholder="Enter Your message" id="m" />
+        <script src="/socket.io/socket.io.js"></script>
+        <button onclick="sendMessage()" >POST</button>
+        <script>
+            var socket  =  io();
+
+            function sendMessage(){
+                var messageInput  =  document.getElementById('m');
+                var message   = messageInput.value;
+                socket.emit('chat message' , message);
+                messageInput.value = "";
+                return false
+            }
+
+            socket.on('chat message' , function(msg){
+                var item  = document.createElement('li')
+                item.textContent   =msg;
+                document.getElementById('messages').appendChild(item)
+                window.screenTop(0 , document.body.scrollHeight)
+            })
+        </script>
+    </body>
+</html>
